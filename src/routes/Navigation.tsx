@@ -5,6 +5,7 @@ import {
   NavLink
 } from "react-router-dom";
 import logo from '../logo.svg';
+import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
 
 export const Navigation = () => {
   return (
@@ -14,25 +15,25 @@ export const Navigation = () => {
           <img src={ logo } alt="React logo"/>
           <ul>
             <li>
-              <NavLink to="/" activeClassName="nav-active" exact>Home</NavLink>
+              <NavLink to="/lazy1" activeClassName="nav-active" exact>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/about" activeClassName="nav-active" exact>About</NavLink>
+              <NavLink to="/lazy2" activeClassName="nav-active" exact>About</NavLink>
             </li>
             <li>
-              <NavLink to="/users" activeClassName="nav-active" exact>Users</NavLink>
+              <NavLink to="/lazy3" activeClassName="nav-active" exact>Users</NavLink>
             </li>
           </ul>
         </nav>
         <Switch>
           <Route path="/about">
-            <h1>About</h1>
+            <LazyPage1 />
           </Route>
           <Route path="/users">
-            <h1>Users</h1>
+            <LazyPage2 />
           </Route>
           <Route path="/">
-            <h1>Home</h1>
+            <LazyPage3 />
           </Route>
         </Switch>
       </div>
