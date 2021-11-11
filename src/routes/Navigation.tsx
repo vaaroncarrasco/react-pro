@@ -1,42 +1,51 @@
+import { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink
+  NavLink,
+  Redirect
 } from "react-router-dom";
 import logo from '../logo.svg';
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
+import { routes } from "./routes";
 
 export const Navigation = () => {
   return (
-    <Router>
-      <div className="main-layout">
-        <nav>
-          <img src={ logo } alt="React logo"/>
-          <ul>
-            <li>
-              <NavLink to="/lazy1" activeClassName="nav-active" exact>Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy2" activeClassName="nav-active" exact>About</NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy3" activeClassName="nav-active" exact>Users</NavLink>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path="/about">
-            <LazyPage1 />
-          </Route>
-          <Route path="/users">
-            <LazyPage2 />
-          </Route>
-          <Route path="/">
-            <LazyPage3 />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <Suspense fallback={ <span>Loading...</span> }>
+      <Router>
+        <div className="main-layout">
+          <nav>
+            <img src={ logo } alt="React logo"/>
+            <ul>
+              {
+                routes.map(({ path, name }) => (
+                  <li key={ path }>
+                    <NavLink
+                      to={ path }
+                      activeClassName="nav-active"
+                      exact
+                    >
+                      { name }
+                    </NavLink>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+          <Switch>
+            {
+              routes.map(({ path, component:Component }) => (
+                <Route
+                  key={ path }
+                  path={ path }
+                  render={ () => <Component /> }
+                />
+              ))
+            }
+            <Redirect to={ routes[0].path } />
+          </Switch>
+        </div>
+      </Router>
+    </Suspense>
   );
 }
