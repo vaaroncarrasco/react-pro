@@ -9,34 +9,17 @@ export const useShoppingCart = () => {
   const onProductCountChange = ({ count, product }: { count: number, product: Product }) => {
 
     setShoppingCart( prevShoppingCart => {
-
-      const productInCart: ProductInCart = prevShoppingCart[product.id] || { ...product, count: 0 };
-
-      // add product
-      if ( Math.max( productInCart.count + count, 0 ) > 0 ) {
-        productInCart.count += count
-        return {
-          ...prevShoppingCart,
-          [product.id]: productInCart
-        }
+      // ? Filter out obj from state{}
+      if ( count === 0 ) {
+        // De-structure obj to delete from state{}
+        const { [product.id]: toDelete, ...rest } = prevShoppingCart;
+        return rest;
       }
 
-      // delete product
-      const { [product.id]: toDelete, ...rest } = prevShoppingCart;
-      return rest;
-
-      // other way
-      // // ? Filter out obj from state{}
-      // if ( count === 0 ) {
-      //   // De-structure obj to delete from state{}
-      //   const { [product.id]: toDelete, ...rest } = prevShoppingCart;
-      //   return rest;
-      // }
-
-      // return {
-      //   ...prevShoppingCart,
-      //   [product.id]: { ...product, count }
-      // }
+      return {
+        ...prevShoppingCart,
+        [product.id]: { ...product, count }
+      }
     })
   }
 
