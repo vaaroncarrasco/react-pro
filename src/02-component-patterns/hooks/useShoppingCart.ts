@@ -16,15 +16,9 @@ export const useShoppingCart = () => {
         return rest;
       }
 
-      return {
-        ...prevShoppingCart,
-        [product.id]: { ...product, count }
-      }
+      return { ...prevShoppingCart, [product.id]: { ...product, count } }
     })
   }
 
-  return {
-    onProductCountChange,
-    shoppingCart,
-  }
+  return { onProductCountChange, shoppingCart, }
 }

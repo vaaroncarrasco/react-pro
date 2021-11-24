@@ -19,12 +19,7 @@ export const useProduct = ( { onChange, product, value = 0 }: useProductArgs ) =
     onChange && onChange({ count: newValue, product });
   }
 
-  useEffect(() => {
-    setCounter( value );
-  }, [ value ])
+  useEffect( () => { setCounter( value ) }, [ value ] )
 
-  return {
-    counter,
-    increaseBy
-  }
+  return { counter, increaseBy }
 }
